@@ -1,0 +1,23 @@
+#exercise looks at data from restaurants in Baltimore 
+#Read the XML data from here: 
+#website used: https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Frestaurants.xml 
+#the question here is to examine how many restaurants have zipcode 21231?
+
+#install the appropriate package first
+install.packages("XML", lib="/data/Rpackages/") #trying a different approach
+library(XML)
+#specify the website in question
+fileUrl = "http://d396qusza40orc.cloudfront.net/getdata%2Fdata%2Frestaurants.xml"
+#labels the document using TreeParse
+doc = xmlTreeParse(fileUrl, useInternal=TRUE)
+#rootNode looks at nested data within the page
+rootNode = xmlRoot(doc)
+xmlName(rootNode)
+names(rootNode)
+#one can go deeper within the nests
+rootNode[[1]][[1]][[2]]
+#since we are interested in zipcodes
+zip = xpathSApply(rootNode,"//zipcode",xmlValue)
+#isolate the one in question
+zip == "21231"
+sum(zip =="21231") 
